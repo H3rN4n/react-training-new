@@ -7,7 +7,8 @@ class BookingComponent extends React.Component {
     var data = [
       {'user': 'Pepe', 'date': '2016-12-12'},
       {'user': 'Marcos', 'date': '2016-11-12'},
-      {'user': 'Andres', 'date': '2016-10-12'},
+      //{'user': 'Andres', 'date': '2016-10-12'},
+      {'user': 'Andres'},
       {'user': 'Hernan', 'date': '2016-9-12'}
     ];
     return <div>
@@ -32,6 +33,15 @@ class BookingListItem extends React.Component {
     return <div> User: {this.props.user} <br/> date: {this.props.date}</div>
   }
 }
+
+BookingListItem.propTypes = {
+  user: React.PropTypes.string.isRequired,
+  date: React.PropTypes.string.isRequired
+};
+
+BookingListItem.defaultProps = {
+  date: '0000-00-00'
+};
  
 class BookingForm extends React.Component {
   constructor(props) {
@@ -53,10 +63,10 @@ class BookingForm extends React.Component {
   submitForm(event){
     event.preventDefault();
     console.log(this.state);
-    this.setState({
-      user: '',
-      date: ''
-    });
+    // this.setState({
+    //   user: '',
+    //   date: ''
+    // });
   }
 
   render() {
