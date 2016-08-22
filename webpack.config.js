@@ -2,7 +2,7 @@ var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-    entry: "./index.jsx",
+    entry: "./src/index.jsx",
     output: {
         filename: "./dist/bundle.js",
     },
@@ -11,13 +11,13 @@ module.exports = {
     devtool: "source-map",
 
     resolve: {
-        // Add '.ts' and '.tsx' as resolvable extensions.
+        // Add '.jsx' as resolvable extension.
         extensions: ["", ".webpack.js", ".web.js", ".js", ".jsx"]
     },
 
     module: {
         loaders: [
-            // All files with a '.ts' or '.tsx' extension will be handled by 'ts-loader'.
+            // All files with a '.jsx' extension will be handled by 'babel'.
             { 
                 test: /\.jsx?$/,         // Match both .js and .jsx files
                 exclude: /node_modules/, 
