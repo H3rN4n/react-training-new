@@ -1,7 +1,7 @@
 import React from "react";
+import { Router, Route, browserHistory } from 'react-router'
 import * as BookingActions from "../actions/bookingActions";
 import BookingStore from "../stores/bookingStore";
-import { withRouter } from 'react-router'
 
 // Booking Module Structure
 //
@@ -14,10 +14,7 @@ import { withRouter } from 'react-router'
 export class BookingComponent extends React.Component {
   constructor(props){
     super(props);
-    console.log(this.props)
-    console.log(withRouter);
-    setTimeout(()=> this.props.router.push('/about'), 1000);
-  
+    
     this.getDates = this.getDates.bind(this);
     this.state = {
       dates: []
@@ -53,19 +50,33 @@ export class BookingComponent extends React.Component {
     </div>)
   }
 }
+
 // BookingList
 class BookingList extends React.Component {
+  constructor(props, context){
+    super(props);
+
+    function goToAbout(){
+      context.router.push('/form');
+    }
+
+    this.goToAbout = goToAbout;
+  }
   render() {
   	var booking = this.props.dates.map(function(date, i){
   		return <BookingListItem key={i} userId={date.userId} desc={date.desc} providerId={date.providerId}/>
   	})
 		
     return <div>
-            <BookingForm />
+            <button onClick={this.goToAbout} class="btn btn-warning">goTo About</button>
             <div>{booking}</div>
           </div>
   }
 }
+
+BookingList.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 
 // BookingListItem
 class BookingListItem extends React.Component {
@@ -98,12 +109,18 @@ BookingListItem.defaultProps = {
 };
  
 // BookingForm
-class BookingForm extends React.Component {
-  constructor(props) {
+export class BookingForm extends React.Component {
+  constructor(props, context) {
     super(props);
     this.state = {
       user : Object.assign({})
     }
+
+    function goToRoot(){
+      context.router.push('/');
+    }
+
+    this.goToRoot = goToRoot;
 
     this.handleChange = this.handleChange.bind(this);
   }
@@ -115,6 +132,8 @@ class BookingForm extends React.Component {
   // watchUserDate(el){
   //   this.setState({date: el.target.value})
   //}
+
+  
 
   handleChange(e) {
     let field = e.target.name;
@@ -160,6 +179,8 @@ class BookingForm extends React.Component {
                     </select>
                     <br/>
                     <button type="submit" onClick={this.submitForm.bind(this)} class="btn btn-success">Add New</button>
+                    <button onClick={this.goToRoot} class="btn btn-warning">goTo Root</button>
+                    
                 </div>
                 </div>
             </div>
@@ -167,3 +188,7 @@ class BookingForm extends React.Component {
     </div>
   }
 }
+
+BookingForm.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
